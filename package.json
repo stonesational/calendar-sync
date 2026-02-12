@@ -1,0 +1,8 @@
+{
+    "name": "calendar-sync",
+    "private": true,
+    "scripts": {
+      "clasp": "clasp"
+    }
+  }
+  
