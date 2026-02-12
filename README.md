@@ -77,3 +77,17 @@ You want to show your true calendar availability from within the client system's
 ## Additional Resources
 
 - [Google App Script Calendar API](https://developers.google.com/apps-script/reference/calendar)
+
+### Recommended enhancements to generated clasp.json
+
+```json
+{
+  "scriptId": "<PROJECT_ID_GENERATED>",
+  "rootDir": "",
+  "scriptExtensions": [".gs"],
+  "htmlExtensions": [".html"],
+  "jsonExtensions": [".json"],
+  "filePushOrder": ["main.gs", "Utilities.gs", "FetchEvents.gs", "SkipRules.gs", "SendInvites.gs"],
+  "skipSubdirectories": false
+}
+```
