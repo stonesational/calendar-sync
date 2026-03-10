@@ -11,6 +11,7 @@
  * @returns {ErrorItem[]} List of errors encountered (empty if none)
  */
 function sendInvites(calendarId, eventList, email) {
+  Log.debug(`START SendInvites.js:sendInvites(): calendarId: ${calendarId} | eventList: ${eventList.length} | email: ${email}`);
   const errorList = [];
 
   for (const event of eventList) {
@@ -57,6 +58,7 @@ function recordEventLookupError(event, error, errorList) {
  * @returns {Object|undefined} Calendar API event object, or undefined
  */
 function getEventFromList(calendarId, event, errorList) {
+  Log.debug(`START SendInvites.js:getEventFromList(): calendarId: ${calendarId} | eventTitle ${event.getTitle()} | eventID: ${event.getId()}`);
   try {
     let eventList = Calendar.Events.list(calendarId, {
       iCalUID: event.getId(),
@@ -95,6 +97,7 @@ function getEventFromList(calendarId, event, errorList) {
  * @param {ErrorItem[]} errorList - Accumulator for errors
  */
 function sendInvite(calendarId, calendarApiEvent, email, errorList) {
+  Log.debug(`START SendInvites.js:sendInvite(): calendarId: ${calendarId} | eventTitle ${calendarApiEvent.summary} | eventID: ${calendarApiEvent.id}`);
   try {
     const event = Calendar.Events.get(calendarId, calendarApiEvent.id);
 

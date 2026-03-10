@@ -47,11 +47,23 @@ const ERROR_NOTIFY_EMAIL = '';
  * MAIN: Execute this function from the batch schedule run.
  */
 function AddEmailToInvites() {
-  let eventList = fetchEvents(SECONDARY_CALENDAR_ID, DAYS_IN_ADVANCE);
-  eventList = filterEventsToSync(eventList, EMAIL_ADDRESS_TO_ADD, Boolean(SECONDARY_CALENDAR_ID));
+  Log.debug(`START main.gs:AddEmailToInvites()`);
+
+  // Use either the secondary calendar or the default calendar of the running user
+  const isSecondaryCalendar = Boolean(SECONDARY_CALENDAR_ID);
+  if (isSecondaryCalendar) {
+    calendar = CalendarApp.getCalendarById(SECONDARY_CALENDAR_ID);
+    Log.info(`Using Calendar ID: ${calendar.getId()}`);
+  } else {
+    Log.info('No Calendar ID so using default calendar for running user');
+    calendar = CalendarApp.getDefaultCalendar();
+  }
+  
+  let eventList = fetchEvents(calendar, DAYS_IN_ADVANCE);
+  eventList = filterEventsToSync(eventList, EMAIL_ADDRESS_TO_ADD, isSecondaryCalendar);
   Log.info(`Found ${eventList.length} events to process`);
 
-  const errorList = sendInvites(SECONDARY_CALENDAR_ID, eventList, EMAIL_ADDRESS_TO_ADD);
+  const errorList = sendInvites(calendar.getId(), eventList, EMAIL_ADDRESS_TO_ADD);
 
   if (errorList.length > 0) {
     Log.error(`Error sending invites: ${errorList.length} errors found`);

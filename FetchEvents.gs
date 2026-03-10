@@ -14,23 +14,14 @@ function getDateRangeEnd(daysFromNow) {
 
 /**
  * Fetches events from a calendar for the next N days.
- * @param {string} calendarId - Calendar ID (falsy = default calendar)
+ * @param {Calendar} calendar - Calendar ID (falsy = default calendar)
  * @param {number} days - Number of days ahead to fetch
  * @returns {CalendarEvent[]}
  */
-function fetchEvents(calendarId, days) {
-  Log.info(`Fetching events for calendarId: ${calendarId}`);
+function fetchEvents(calendar, days) {
+  Log.info(`Fetching events for calendarId: ${calendar.getId()}`);
 
-  let calendar;
   try {
-    if (!calendarId) {
-      Log.info('No Calendar ID so using default calendar for running user');
-      calendar = CalendarApp.getDefaultCalendar();
-    } else {
-      Log.info(`Using Calendar ID: ${calendarId}`);
-      calendar = CalendarApp.getCalendarById(calendarId);
-    }
-
     const startRange = new Date();
     const endRange = getDateRangeEnd(days);
     const eventList = calendar.getEvents(startRange, endRange);
