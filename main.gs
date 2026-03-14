@@ -11,7 +11,7 @@
  *    → Go to: https://developers.google.com/apps-script/guides/services/advanced
  *    → Enable the Calendar API service
  *
- * 2. Set Required Constants 
+ * 2. Set Required Constants in config.gs. Make a copy of configTemplate.gs and name it config.gs so settings not in source control.
  *    → EMAIL_ADDRESS_TO_ADD (required)
  *      Set to the email address you want to have added to calendar invtes. I.e. Where do you want the events to be synced?
  *
@@ -33,15 +33,6 @@
  *  
  * ============================================================================
  */
-
-/**
- *  Configuration Constants
- */ 
-const EMAIL_ADDRESS_TO_ADD = '';
-const SECONDARY_CALENDAR_ID = '';
-const DAYS_IN_ADVANCE = 1;
-const DEBUG_MODE = false;
-const ERROR_NOTIFY_EMAIL = '';
 
 /**
  * MAIN: Execute this function from the batch schedule run.
@@ -71,4 +62,8 @@ function AddEmailToInvites() {
   } else {
     Log.info(`No errors found sending invites`);
   }
+}
+
+function CronScheduler() {
+  AddEmailToInvites();
 }
